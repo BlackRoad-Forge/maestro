@@ -60,10 +60,6 @@ unsafe fn user_copy(src: *const u8, dst: *mut u8, n: usize) -> EResult<()> {
 /// Low level function to zero a range of memory, with page fault handling.
 ///
 /// If the access check fails, the function returns [`EFAULT`].
-///
-/// # Safety
-///
-/// The caller must ensure that `dst` points to valid memory that can be written to.
 unsafe fn user_zero(dst: *mut u8, n: usize) -> EResult<()> {
 	let res = vmem::smap_disable(|| raw_zero(dst, n));
 	if likely(res) {
